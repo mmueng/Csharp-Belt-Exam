@@ -1,0 +1,31 @@
+
+
+@model Activitys 
+
+
+
+
+
+
+            <h1>@ViewBag.Activity.Title</h1>
+            <h2>Event Coordinator: @ViewBag.Activity.User.FirstName @ViewBag.Activity.User.LastName</h2>
+            <h2>Description:</h2>
+            <p>@ViewBag.Activity.Desc</p>
+<h1>List Of Gusts:</h1>
+
+@foreach(Association a in @Model.Assoc_Activity)
+{
+    <li>@a.User.FirstName @a.User.LastName</li>
+                
+}
+
+
+   @if(Model.Assoc_Activity.Where(p=>p.UserId ==@ViewBag.loginUser).Count()==0)
+    {
+  <a href="/AddUserToActivity/@Model.ActivityId"><button class="btn btn-primary theButton">JOIN</button></a>
+     
+    }else 
+    {
+
+          <a href="/RemoveUserFromActivity/@Model.ActivityId"><button class="btn btn-primary theButton">Leave</button></a>
+    }

@@ -1,0 +1,62 @@
+﻿@using Belt_Exam.Models
+
+
+@model List<Activitys>
+
+<div class="row">
+    <div class="col col-6">
+        <h1>Dojo Activity Center</h1>
+    </div>
+    <div class="col col-4">
+       
+    </div>
+    <div class="col col-2"><a href="Logout" class="btn btn-primary">LogOut</a></div>
+</div>
+    <button type="button" calss="btn btn-primary"><a href="Success/NewActivitys">Add New Activity </a></button>
+
+
+    <div class="row">
+    <table class="table">
+        <tr>
+            <td>Activity</td>
+            <td>Date & Time</td>
+            <td>Duration</td>
+            <td>Events Cordinator</td>
+            <td>No. of Participants</td>
+            <td>Action</td>
+        </tr>
+ 
+        @foreach(var act in @Model)
+        {
+        <tr>
+            <td><a href="show/@act.ActivityId">@act.Title</a></td>
+
+            <td>@act.Date  @act.Time</td>
+
+            <td>@act.Duration @act.DurationType</td>
+            <td>@act.User.FirstName @act.User.LastName</td>
+           
+            <td>@act.Assoc_Activity.Count</td>
+            }
+    
+    
+            @{
+                 if(@act.UserId == @ViewBag.logUser)
+                {
+                    <td><a href="Delete/@act.ActivityId">Delete</a></td>
+                }
+                else
+                {         
+                    <td>
+                        @if(@act.Assoc_Activity.Any(w=>w.UserId == @ViewBag.logUser))
+                        {
+                            <a href="RemoveUserFromActivity/@act.ActivityId">LEAVE</a>   
+                        }else{
+                            <a href="AddUserToActivity/@act.ActivityId">JOIN</a>
+                        }                      
+                    </td>                                  
+                }
+            }
+        </tr>
+
+}
